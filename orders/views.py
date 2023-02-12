@@ -1,12 +1,17 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from carts.models import CartItem
-from orders.forms import OrderForm
-from .models import Order
+from .forms import OrderForm
+from .models import Order,OrderProduct
 import datetime
 # Create your views here.
 
 def payments(request):
+    cart_items = CartItem.objects.filter(user=request.user)
+    
+    for item in cart_items:
+        orderproduct = OrderProduct()
+        orderproduct.order_id = order.id
     return render(request,'orders/payments.html')
 
 
@@ -48,7 +53,7 @@ def place_order(request,total=0,quantity=0):
             data.order_note = form.cleaned_data['order_note']
             data.order_total = grand_total
             data.tax = tax
-            data.ip = request.META.get('REMORT_ADDR')
+            # data.ip = request.META.get('HTTP_X_FORWARDED_FOR')
             data.save()
             
             # Generate order numbe

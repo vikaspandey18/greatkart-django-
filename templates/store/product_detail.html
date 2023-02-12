@@ -36,7 +36,7 @@
                                     <select name="color" id="" class="form-control">
                                         <option value="">Select Color</option>
                                         {% for i in single_product.variation_set.colors %}
-                                            <option value="{{ i.variation_value }}">{{i.variation_value}}</option>
+                                            <option value="{{ i.variation_value | lower }}">{{ i.variation_value | capfirst }}</option>
                                         {% endfor %}
                                     </select>
                                 </div>
